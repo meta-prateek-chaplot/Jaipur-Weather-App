@@ -8,24 +8,30 @@ using Newtonsoft.Json.Linq;
 
 namespace Jaipur_Weather
 {
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    /// 
     static class Program
     {
         private static JObject userData { get; set; }
-        private static Object fileLock = new Object();
+        //public static Object fileLock = new Object();
+
+        static Form1 cls;
 
         private static void SetData()
         {
             string data = "";
 
-            lock (Program.fileLock)
-            {
+            //lock (Program.fileLock)
+            
                 using (WebClient wc = new WebClient())
                 {
                     data = wc.DownloadString("http://api.openweathermap.org/data/2.5/weather?id=1269515&units=metric&appid=4d302b00539441446f7736801e1bb1cc");
                 }
 
                 userData = JObject.Parse(data);
-            }
+            
         }
 
         public static void Set()
@@ -37,33 +43,32 @@ namespace Jaipur_Weather
             { Program.SetData(); }, null, startTimeSpan, periodTimeSpan);
         }
 
-        // Repair
         private static void ShowData()
         {
-            lock (Program.fileLock)
-            {
-                Console.WriteLine(Program.userData);
-            }
+            //lock (Program.fileLock)
+            
+                cls.chart1.Series["Temperature"].Points.AddXY("Jaipur", (int)userData["main"]["temp"]);
+                cls.chart1.Series["Pressure"].Points.AddXY("Jaipur", (int)userData["main"]["pressure"]);
+                cls.chart1.Series["Humidity"].Points.AddXY("Jaipur", (int)userData["main"]["humidity"]);
+            
         }
 
         public static void Show()
         {
             var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(5);
+            var periodTimeSpan = TimeSpan.FromMinutes(1);
 
             var timer = new System.Threading.Timer((e) =>
             { Program.ShowData(); }, null, startTimeSpan, periodTimeSpan);
         }
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            cls = new Form1();
+            Application.Run(cls);
         }
     }
 }

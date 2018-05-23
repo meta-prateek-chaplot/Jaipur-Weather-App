@@ -76,6 +76,7 @@
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
+            series1.YValuesPerPoint = 2;
             this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(698, 391);
             this.chart1.TabIndex = 1;

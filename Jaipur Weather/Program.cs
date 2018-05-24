@@ -14,61 +14,81 @@ namespace Jaipur_Weather
     
     static class Program
     {
-        private static JObject userData { get; set; }
-        public static Object fileLock = new Object();
+        //private static JObject userData { get; set; }
+        //private static Object fileLock = new Object();
 
-        static Form1 cls;
+        //static Form1 cls;
 
-        public static void SetData()
-        {
-            lock (Program.fileLock)
-            {
-                string data = "";
+        //public static void SetData()
+        //{
+        //    //lock (Program.fileLock)
+        //    //{
+        //        //    cls.Invoke((MethodInvoker)delegate
+        //        //    {
+        //        string data = "";
 
-                using (WebClient wc = new WebClient())
-                {
-                    data = wc.DownloadString("http://api.openweathermap.org/data/2.5/weather?id=1269515&units=metric&appid=4d302b00539441446f7736801e1bb1cc");
-                }
+        //            using (WebClient wc = new WebClient())
+        //            {
+        //                data = wc.DownloadString("http://api.openweathermap.org/data/2.5/weather?id=1269515&units=metric&appid=4d302b00539441446f7736801e1bb1cc");
+        //            }
 
-                userData = JObject.Parse(data);
-            }
-        }
+        //            userData = JObject.Parse(data);
+        //        //    });
+        //    //}
 
-        public static void ShowData()
-        {
-            lock (Program.fileLock)
-            {
-                cls.chart1.Series["Temperature"].Points.AddXY("Jaipur", (int)userData["main"]["temp"]);
-                cls.chart1.Series["Pressure"].Points.AddXY("Jaipur", (int)userData["main"]["pressure"]);
-                cls.chart1.Series["Humidity"].Points.AddXY("Jaipur", (int)userData["main"]["humidity"]);
-            }
-        }
+        //}
 
-        public static void Set()
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(10);
+        //public static void ShowData()
+        //{
+        //    //lock (Program.fileLock)
+        //    //{
+        //    //    cls.Invoke((MethodInvoker)delegate
+        //    //    {
+        //    cls.chart1.Series["Temperature"].Points.Clear();
+        //    cls.chart1.Series["Pressure"].Points.Clear();
+        //    cls.chart1.Series["Humidity"].Points.Clear();
 
-            var timer = new System.Threading.Timer((e) =>
-            { Program.SetData(); }, null, startTimeSpan, periodTimeSpan);
-        }
-        
-        public static void Show()
-        {
-            var startTimeSpan = TimeSpan.Zero;
-            var periodTimeSpan = TimeSpan.FromSeconds(90);
+        //    cls.chart1.Series["Temperature"].Points.AddXY("Jaipur", (int)userData["main"]["temp"]);
+        //    cls.chart1.Series["Pressure"].Points.AddXY("Jaipur", (int)userData["main"]["pressure"] / 100);
+        //    cls.chart1.Series["Humidity"].Points.AddXY("Jaipur", (int)userData["main"]["humidity"]);
+        //        //    });
+        //    //}
 
-            var timer = new System.Threading.Timer((e) =>
-            { Program.ShowData(); }, null, startTimeSpan, periodTimeSpan);
-        }
+        //}
+
+        //public static void Set()
+        //{
+        //    var startTimeSpan = TimeSpan.Zero;
+        //    var periodTimeSpan = TimeSpan.FromSeconds(1);
+
+        //    //cls.Invoke((MethodInvoker)delegate
+        //    //{
+        //       var timer = new System.Threading.Timer((e) =>
+        //       { Program.SetData(); Program.ShowData(); }, null, startTimeSpan, periodTimeSpan);
+        //    //});
+            
+        //}
+
+        //public static void Show()
+        //{
+        //    var startTimeSpan = TimeSpan.Zero;
+        //    var periodTimeSpan = TimeSpan.FromSeconds(1);
+
+        //    //cls.Invoke((MethodInvoker)delegate
+        //    //{
+        //    var timer = new System.Threading.Timer((e) =>
+        //    { Program.ShowData(); }, null, startTimeSpan, periodTimeSpan);
+        //    //});
+
+        //}
 
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            cls = new Form1();
-            Application.Run(cls);
+            //cls = new Form1();
+            Application.Run(new Form1());
         }
     }
 }

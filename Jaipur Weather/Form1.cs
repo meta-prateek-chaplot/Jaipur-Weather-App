@@ -28,6 +28,10 @@ namespace Jaipur_Weather
 
         private void SetData()
         {
+            chart1.Series["Temperature"].Points.Clear();
+            chart1.Series["Pressure"].Points.Clear();
+            chart1.Series["Humidity"].Points.Clear();
+
             chart1.Series["Temperature"].Points.AddXY("Jaipur", (int)userData["main"]["temp"]);
             chart1.Series["Pressure"].Points.AddXY("Jaipur", (int)userData["main"]["pressure"] / 100);
             chart1.Series["Humidity"].Points.AddXY("Jaipur", (int)userData["main"]["humidity"]);
